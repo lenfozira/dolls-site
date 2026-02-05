@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Охотник Аян</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: #0e6956;
+            color: #f8fafc;
+        }
+        
+        header {
+            padding: 16px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        header p {
+            margin: 6px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            /* ← вот оно, 1920×1080 */
+            overflow: hidden;
+            background: #020617;
+        }
+        
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* ← магия */
+            display: none;
+        }
+        
+        .slider img.active {
+            display: block;
+        }
+        
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+        
+        button.secondary {
+            background: #1e293b;
+        }
+        
+        .content {
+            padding: 16px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .audio-btn {
+            flex: 1;
+            /* ← растягивается как Назад/Вперёд */
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #16a34a;
+            color: white;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Охотник Аян</h1>
+        <p>Кукла по мотивам культуры Эвенков</p>
+    </header>
+
+    <!-- СЛАЙДЕР -->
+    <div class="slider">
+        <img src="k1.png" class="active">
+        <img src="k2.png">
+        <img src="k3.png">
+        <img src="k4.png">
+        <img src="k5.png">
+        <img src="k6.png">
+        <img src="k7.png">
+        <img src="k8.png">
+        <img src="k9.png">
+        <img src="k10.png">
+        <img src="k11.png">
+    </div>
+
+    <div class="slider-controls">
+        <button class="secondary" onclick="prevSlide()">← Назад</button>
+        <button class="secondary" onclick="nextSlide()">Вперёд →</button>
+    </div>
+
+    <!-- КНОПКА АУДИО -->
+    <div class="slider-controls">
+        <button class="audio-btn" onclick="toggleAudio()">🎧 Слушать сказку</button>
+    </div>
+
+
+    <audio id="audio">
+  <source src="ayan.m4a">
+</audio>
+
+    <!-- ТЕКСТ -->
+    <div class="content">
+        <p>
+            Эвенки — коренной малочисленный народ Сибири и Дальнего Востока, проживающий на обширных территориях от Енисея до Охотского моря, включая Республику Саха (Якутия), Красноярский край и Амурскую область.
+        </p>
+
+        <p>
+            Основой традиционного хозяйства эвенков являлось кочевое оленеводство, а также охота и рыболовство. Олень играл ключевую роль в жизни народа, обеспечивая пищу, одежду и средства передвижения.
+        </p>
+
+        <p>
+            Традиционным жилищем эвенков был переносной чум, удобный для кочевого образа жизни и частых сезонных переходов.
+        </p>
+
+        <p>
+            Эта кукла символизирует свободу кочевника, тесную связь человека с природой и сохранение традиционного уклада жизни эвенкийского народа.
+        </p>
+
+
+    </div>
+
+    <footer>
+        НПК • Алена Иванова • 2026
+    </footer>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll(".slider img");
+        const audio = document.getElementById("audio");
+        let playing = false;
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove("active"));
+            slides[index].classList.add("active");
+        }
+
+        function nextSlide() {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        }
+
+        function prevSlide() {
+            current = (current - 1 + slides.length) % slides.length;
+            showSlide(current);
+        }
+
+        function toggleAudio() {
+            if (!playing) {
+                audio.play();
+                playing = true;
+                event.target.innerText = "⏸ Пауза";
+            } else {
+                audio.pause();
+                playing = false;
+                event.target.innerText = "🎧 Слушать сказку";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
