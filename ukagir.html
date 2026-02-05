@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Смелый Уяндьаа</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: #0e6956;
+            color: #f8fafc;
+        }
+        
+        header {
+            padding: 16px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        header p {
+            margin: 6px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            /* ← вот оно, 1920×1080 */
+            overflow: hidden;
+            background: #020617;
+        }
+        
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* ← магия */
+            display: none;
+        }
+        
+        .slider img.active {
+            display: block;
+        }
+        
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+        
+        button.secondary {
+            background: #1e293b;
+        }
+        
+        .content {
+            padding: 16px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .audio-btn {
+            flex: 1;
+            /* ← растягивается как Назад/Вперёд */
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #16a34a;
+            color: white;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Смелый Уяндьаа</h1>
+        <p>Кукла по мотивам культуры Юкагиров</p>
+    </header>
+
+    <!-- СЛАЙДЕР -->
+    <div class="slider">
+        <img src="u1.png" class="active">
+        <img src="u2.png">
+        <img src="u3.png">
+        <img src="u4.png">
+        <img src="u5.png">
+        <img src="u6.png">
+        <img src="u7.png">
+        <img src="u8.png">
+        <img src="u9.png">
+    </div>
+
+    <div class="slider-controls">
+        <button class="secondary" onclick="prevSlide()">← Назад</button>
+        <button class="secondary" onclick="nextSlide()">Вперёд →</button>
+    </div>
+
+    <!-- КНОПКА АУДИО -->
+    <div class="slider-controls">
+        <button class="audio-btn" onclick="toggleAudio()">🎧 Слушать сказку</button>
+    </div>
+
+
+    <audio id="audio">
+  <source src="ukagir.m4a">
+</audio>
+
+    <!-- ТЕКСТ -->
+    <div class="content">
+        <p>
+            Юкагиры — один из древнейших малочисленных коренных народов Северо-Восточной Сибири. В настоящее время они проживают преимущественно на территории Республики Саха (Якутия), а также в Чукотском автономном округе.
+        </p>
+
+        <p>
+            Основу традиционного хозяйства юкагиров составляли охота, рыболовство и оленеводство. Эти занятия обеспечивали людей пищей, одеждой и средствами передвижения в условиях сурового климата.
+        </p>
+
+        <p>
+            Традиционным жилищем юкагиров был переносной шатёр, приспособленный к кочевому образу жизни и сезонным перемещениям.
+        </p>
+
+        <p>
+            Эта кукла символизирует бережное отношение к природе, сохранение культурных традиций и преемственность поколений юкагирского народа.
+        </p>
+
+    </div>
+
+    <footer>
+        НПК • Алена Иванова • 2026
+    </footer>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll(".slider img");
+        const audio = document.getElementById("audio");
+        let playing = false;
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove("active"));
+            slides[index].classList.add("active");
+        }
+
+        function nextSlide() {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        }
+
+        function prevSlide() {
+            current = (current - 1 + slides.length) % slides.length;
+            showSlide(current);
+        }
+
+        function toggleAudio() {
+            if (!playing) {
+                audio.play();
+                playing = true;
+                event.target.innerText = "⏸ Пауза";
+            } else {
+                audio.pause();
+                playing = false;
+                event.target.innerText = "🎧 Слушать сказку";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
