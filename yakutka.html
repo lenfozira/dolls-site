@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Хранительница троп</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: #0e6956;
+            color: #f8fafc;
+        }
+        
+        header {
+            padding: 16px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        header p {
+            margin: 6px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            /* ← вот оно, 1920×1080 */
+            overflow: hidden;
+            background: #020617;
+        }
+        
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* ← магия */
+            display: none;
+        }
+        
+        .slider img.active {
+            display: block;
+        }
+        
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+        }
+        
+        button.secondary {
+            background: #1e293b;
+        }
+        
+        .content {
+            padding: 16px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .audio-btn {
+            flex: 1;
+            /* ← растягивается как Назад/Вперёд */
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #16a34a;
+            color: white;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Девочка Айаана</h1>
+        <p></p>
+    </header>
+
+    <!-- СЛАЙДЕР -->
+    <div class="slider">
+        <img src="yakutka.jpg" class="active">
+
+    </div>
+
+    <!-- КНОПКА АУДИО -->
+    <div class="slider-controls">
+        <button class="audio-btn" onclick="toggleAudio()">🎧 Слушать сказку</button>
+    </div>
+
+
+    <audio id="audio">
+  <source src="yakutka.m4a">
+</audio>
+
+    <!-- ТЕКСТ -->
+    <div class="content">
+        <p>
+            Якуты (народ саха) — коренной народ Северо-Восточной Сибири, проживающий преимущественно на территории Республики Саха (Якутия). Их культура формировалась в условиях сурового климата и тесной связи с природой.
+        </p>
+
+        <p>
+            Основой традиционного хозяйства якутов являлось скотоводство и коневодство. Лошади и крупный рогатый скот обеспечивали людей пищей, одеждой и средствами передвижения.
+        </p>
+
+        <p>
+            Традиционным жилищем якутов был зимний дом — балаган, а в летнее время использовались переносные жилища. Особое значение в быту и обрядах имели национальная одежда и украшения.
+        </p>
+
+        <p>
+            Эта кукла символизирует уважение к родной земле, гармонию человека с природой и бережное сохранение культурных традиций народа саха.
+        </p>
+
+    </div>
+
+    <footer>
+        НПК • Алена Иванова • 2026
+    </footer>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll(".slider img");
+        const audio = document.getElementById("audio");
+        let playing = false;
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove("active"));
+            slides[index].classList.add("active");
+        }
+
+        function nextSlide() {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        }
+
+        function prevSlide() {
+            current = (current - 1 + slides.length) % slides.length;
+            showSlide(current);
+        }
+
+        function toggleAudio() {
+            if (!playing) {
+                audio.play();
+                playing = true;
+                event.target.innerText = "⏸ Пауза";
+            } else {
+                audio.pause();
+                playing = false;
+                event.target.innerText = "🎧 Слушать сказку";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
